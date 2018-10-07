@@ -88,29 +88,6 @@ public class DrawingListener  extends MouseAdapter implements ActionListener{
 			x0 = x1;
 			 y0 =y1;
 			System.out.println(new Point(x1,y1));
-//			if(_type.equals("≈Á«π")) {
-//				System.out.println(isDown);
-//
-//				int w = 5;
-//				int h = 5;
-////				e.
-////				while(isDown==true) {
-//////					
-////					try {
-////						Thread.sleep(1000);
-////						g.fillArc(x1, y1, w, h, 0, 1080);
-////
-////						w+=5;
-////						h+=5;
-////					} catch (InterruptedException e1) {
-////						// TODO Auto-generated catch block
-////						e1.printStackTrace();
-////					}
-////					
-////				
-////				}
-//			System.out.println(w+""+h);
-//			}
 		}
 		
 	}
@@ -128,7 +105,6 @@ public class DrawingListener  extends MouseAdapter implements ActionListener{
 			System.out.println(g);
 			
 			g.drawLine(x1, y1, x2,y2);
-//			g.
 //			g.fillArc(x2, y2, 5, 5, 0, 0);
 			System.out.println("ªÊ÷∆");
 
@@ -179,15 +155,8 @@ public class DrawingListener  extends MouseAdapter implements ActionListener{
 			xpoints[4] = xpoints[0] - R/2;
 			ypoints[3] = ypoints[2] = (int) (ypoints[0] + Math.cos(Math.toRadians(18))*R);
 			ypoints[1] = ypoints[4] = (int) (ypoints[0] + Math.sqrt(Math.pow(xpoints[2]-xpoints[3], 2)-Math.pow(R/2, 2)));
-
 			System.out.println("R="+R);
 			System.out.println("r="+r);
-//			xpoints[0] = x1;
-//			ypoints[0] = y1;
-//			xpoints[0] = x2;
-//			ypoints[0] = y2;	
-//			xpoints[0] = x;
-//			ypoints[0] = y1;
 			g.drawLine(xpoints[0], ypoints[0], xpoints[3], ypoints[3]);
 			g.drawLine(xpoints[3], ypoints[3], xpoints[1], ypoints[1]);
 			g.drawLine(xpoints[1], ypoints[1], xpoints[4], ypoints[4]);
@@ -220,32 +189,20 @@ public class DrawingListener  extends MouseAdapter implements ActionListener{
 			int[] ypoints = new int[13];
 
 			int r = Math.abs(x2-x1);
-			xpoints[0] = x1;
-			ypoints[0] = y1;
-			xpoints[1] = x2 ;
-			ypoints[1] = y1;
-			xpoints[2] = x2 ;
-			ypoints[2] = y2;
-			xpoints[3] = x1;
-			ypoints[3] = y2;	
-			xpoints[4] = x1;
-			ypoints[4] = y1;
-			xpoints[5] = x1 + r/2 ;
-			ypoints[5] = y1 - r/2;
-			xpoints[6] = x2 + r/2;
-			ypoints[6] = y1 - r/2;
-			xpoints[7] = x2 + r/2  ;
-			ypoints[7] = y2 -r/2;
-			xpoints[8] = x2 ;
-			ypoints[8] = y2;
-			xpoints[9] = x2 ;
-			ypoints[9] = y1 ;
-			xpoints[10] = x2 + r/2  ;
-			ypoints[10] = y1 -r/2;
-			xpoints[11] = x1 + r/2;
-			ypoints[11] = y1 - r/2;
-			xpoints[12] = x1 ;
-			ypoints[12] = y1;
+			xpoints[0] = x1;ypoints[0] = y1;
+			xpoints[1] = x2;ypoints[1] = y1;
+			xpoints[2] = x2;ypoints[2] = y2;
+			xpoints[3] = x1;ypoints[3] = y2;	
+			xpoints[4] = x1;ypoints[4] = y1;
+			xpoints[5] = x1 + r/2;ypoints[5] = y1 - r/2;
+			xpoints[6] = x2 + r/2;ypoints[6] = y1 - r/2;
+			xpoints[7] = x2 + r/2;ypoints[7] = y2 -r/2;
+			xpoints[8] = x2;ypoints[8] = y2;
+			xpoints[9] = x2;
+			ypoints[9] = y1;
+			xpoints[10] = x2 + r/2;ypoints[10] = y1 -r/2;
+			xpoints[11] = x1 + r/2;ypoints[11] = y1 - r/2;
+			xpoints[12] = x1;ypoints[12] = y1;
 			g.drawPolygon(xpoints, ypoints, 13);
 			g.fillPolygon(xpoints, ypoints, 13);
 //			g.fillPolygon(xpoints, ypoints, 4);

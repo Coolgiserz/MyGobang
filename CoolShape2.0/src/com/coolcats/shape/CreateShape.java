@@ -138,4 +138,8 @@ public class CreateShape extends Shape {
 
 		}
 	}
+	
+	public void drawCude(Graphics g,MouseEvent e) {
+		
+	}
 }

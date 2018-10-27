@@ -269,8 +269,10 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 			case Fractal.SIERPINSKITri:
 				System.out.println("谢尔宾斯基三角形模式");
 				this._g.setColor(new Color(255, 0, 0));
-				RecursionFrac create = new RecursionFrac(this._control,e,_g);
-				create.run();
+				frathread = new FracThread(this._control,this._g,e);
+				frathread.start();
+//				RecursionFrac create = new RecursionFrac(this._control,e,_g);
+//				create.run();
 				
 				break;
 			case Fractal.SIERPINSKIRec:

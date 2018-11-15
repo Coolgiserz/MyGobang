@@ -31,7 +31,7 @@ public class Conf {
 		for(int i=0;i<_citys.size()-1;i++) {
 			dis+=_citys.get(i).distanceTo(_citys.get(i+1));
 		}
-		dis += _citys.get(_citys.size()).distanceTo(_citys.get(0));//最后一个城市返回第一个城市的距离
+		dis += _citys.get(_citys.size()-1).distanceTo(_citys.get(0));//最后一个城市返回第一个城市的距离
 		return dis;
 		
 	}

@@ -1,5 +1,7 @@
 package com.coolcats1113;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
@@ -17,7 +19,8 @@ public class Plane extends FlyingObject {
 
 	}
 
-	public Plane(int x, int y, int r, int speedx, int speedy, int blood, ImageIcon obgimg,JPanel gamePanel,PlaneAI planeAI) {
+	public Plane(int x, int y, int r, int speedx, int speedy, int blood, ImageIcon obgimg, JPanel gamePanel,
+			PlaneAI planeAI) {
 		super();
 		this.TYPE = PLANE;
 		this.gamePanel = gamePanel;
@@ -28,13 +31,15 @@ public class Plane extends FlyingObject {
 //		System.out.println("®‹"+x+","+y+","+this.obgimg  );
 
 		g.drawImage(this.obgimg.getImage(), x, y, null);
-
+		g.setColor(Color.green);
+		g.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 20));
+		g.fillRect(x-2*r, y-2*r, blood, 20);
 	}
 
 	public void movePlane(Graphics g) {
-		
+
 		y = y + speedy;
-		if(y>gamePanel.getHeight()) {
+		if (y > gamePanel.getHeight()) {
 			planeAI.get_flyObjs().remove(this);
 		}
 	}

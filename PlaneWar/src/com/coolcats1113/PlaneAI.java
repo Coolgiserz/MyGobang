@@ -1,5 +1,6 @@
 package com.coolcats1113;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class PlaneAI extends Thread {
 	private JPanel gamePanel;
 	private int bgx, bgy, bgspeed;
 	private boolean isStart = true, isPause = false;
-	private ArrayList<FlyingObject> _flyObjs;
+	private static  ArrayList<FlyingObject> _flyObjs;
 	private ImageIcon planeLow, planeMid, planeHigh;
 	private int genX, genY;
 	private ImageIcon bgImg;
@@ -38,8 +39,8 @@ public class PlaneAI extends Thread {
 	public void run() {
 		BufferedImage bfImg = new BufferedImage(gamePanel.getWidth(), gamePanel.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics bfg = bfImg.getGraphics();
-		BackThread backThread = new BackThread(gamePanel, new ImageIcon("gamebg1.jpg"),bfg);
-		backThread.start();// 背景綫程
+//		BackThread backThread = new BackThread(gamePanel, new ImageIcon("gamebg1.jpg"),bfg);
+//		backThread.start();// 背景綫程
 		Random rand = new Random();
 		Graphics g = gamePanel.getGraphics();
 		planeMid = new ImageIcon("midpimg.png");
@@ -51,12 +52,11 @@ public class PlaneAI extends Thread {
 		while (isStart) {
 			if (!isPause) {
 
-//				g.drawImage(bgImg.getImage(), 0, bgys - deltay, null);
-//				bgys++;
+				bfg.drawImage(bgImg.getImage(), 0, bgys - deltay, null);
+				bgys++;
 //				try {
 //					Thread.sleep(100);
 //				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 //				if (gamePanel.getHeight() + bgys > bgImg.getIconHeight()) {
@@ -64,16 +64,16 @@ public class PlaneAI extends Thread {
 
 				// 自動產生敵機
 				genX = rand.nextInt(gamePanel.getWidth());
-				if (Math.random() > 0.8) {
+				if (Math.random() > 0.99) {
 //					System.out.println("大飛機生成！");
-				} else if (Math.random() > 0.1) {
+				} else if (Math.random() > 0.90) {
 //					System.out.println("小飛機生成！");
-					int speedy = rand.nextInt(10);
+					int speedy = rand.nextInt(10)+5;
 					ImageIcon planeLow = new ImageIcon("lowpimg.png");
 
 					System.out.println("小飛機生成！" + planeLow);
 
-					PlaneLow low = new PlaneLow(genX, genY, 10, 0, speedy, 1, planeLow, gamePanel, this);
+					PlaneLow low = new PlaneLow(genX, genY, 30, 0, speedy, 1, planeLow, gamePanel, this);
 					_flyObjs.add(low);
 				} else {
 //					System.out.println("中飛機生成！！");
@@ -81,7 +81,7 @@ public class PlaneAI extends Thread {
 				}
 //				System.out.println("飛機數量"+_flyObjs.size()+","+_flyObjs.get(_flyObjs.size()-1).getTYPE());
 				try {
-					Thread.sleep(500);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -101,7 +101,9 @@ public class PlaneAI extends Thread {
 
 					}
 				}
+				bfg.setColor(Color.white);
 				g.drawImage(bfImg, 0, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
+//				bfg.fillRect(0, 0,gamePanel.getWidth(), gamePanel.getHeight());
 
 			}
 		}
@@ -123,7 +125,7 @@ public class PlaneAI extends Thread {
 		this.isPause = isPause;
 	}
 
-	public ArrayList<FlyingObject> get_flyObjs() {
+	public static ArrayList<FlyingObject> get_flyObjs() {
 		return _flyObjs;
 	}
 

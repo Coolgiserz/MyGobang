@@ -92,7 +92,7 @@ public class LenOfLongestSubstring {
 			for (int i = 0; i < s.length() - 1; i++) {
 				for (int j = i + 1; j <= s.length(); j++) {
 					if (isUnique(s, i, j)) {
-						curr = s.substring(i, j).length();
+						curr = j-i+1;
 						max = (max > curr) ? max : curr;
 
 					}
@@ -105,7 +105,7 @@ public class LenOfLongestSubstring {
 	public boolean isUnique(String s, int i, int j) {
 		Set<Character> set = new HashSet();
 		char[] chs = s.toCharArray();
-		for (int k = 0; k < chs.length; k++) {
+		for (int k = i; k < j; k++) {
 			if (!set.contains(chs[k])) {
 				set.add(chs[k]);
 			} else {
@@ -114,4 +114,56 @@ public class LenOfLongestSubstring {
 		}
 		return true;
 	}
+	/**
+	 * 采用HashSet、时间复杂度减少为O(n^2)
+	 * 思想:若Sij串中无重复字符，到索引为j时发现有重复，那么不需要继续往下扫描了（）即已经找到
+	 * 从索引i起始得最长子串，此时可直接让i++而不需要往后扫描
+	 * @param s
+	 * @return
+	 */
+    public int lengthOfLongestSubstring3(String s) {
+        HashSet<Character> set = new HashSet();
+        int i = 0,j = 0;int max = 0;
+        int n = s.length();
+        while(i<n && j<n){
+            char ch = s.charAt(j);
+            if(!set.contains(ch)){
+                set.add(ch);
+                j++;
+                max = (max>(j-i))?max:(j-i);
+                
+            }else{
+                set.remove(s.charAt(i));
+                i++;
+            }
+        }
+        return max;
+    }
+    /**
+     * 时间复杂度O(n)
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring4(String s) {
+        int n = s.length();
+        if(n==0){
+            return 0;
+        }
+       HashMap<Character,Integer> map = new HashMap();
+        int i=0,j=0,max=1,count = 0;
+        while( j<n){
+            if(map.containsKey(s.charAt(j))){
+              i = Math.max(map.get(s.charAt(j)),i);
+                
+            }
+            map.put(s.charAt(j),j+1);
+                max = (max>(j-i))?max:(j-i+1);
+                
+                j++;
+                
+          
+        }
+        return max;
+    }
+
 }

@@ -11,7 +11,7 @@ public class testSA {
 
 	public static void main(String[] args) {
 		System.out.println(Conf.getDistance(1, 1, 1, 0));
-		CoolSA sa = new CoolSA(new City(3, 112, 30), 1000, 10, 0.90);
+		CoolSA sa = new CoolSA( 1200, 1, 0.95);
 		sa.initCityLists();
 		Route route = sa.HeuristicLearning();
 		System.out.println(route.toString());

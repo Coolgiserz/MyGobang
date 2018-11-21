@@ -1,115 +1,140 @@
 package com.coolcats20181113;
 
+import java.math.BigInteger;
+
 public class Fibonacci {
 
-	int n=100;
-	 int[] f = new int[n];
+	int n = 101;
+	int[] f = new int[n];
+
 	public static void main(String[] args) {
 		Fibonacci fib = new Fibonacci();
-		
+
 //		fib.testFib1(40);
-		
-		//Fib2测试
+
+		// Fib2测试
 		fib.testFib2(80);
 //		Fib3测试
 		fib.testFib3(80);
 //		Fib4测试
 		fib.testFib4(80);
-		
-		
+
 //		System.out.println(fib.Fib3(60)+" "+fib.Fib2(60)+" "+fib.Fib4(60));
 //		System.out.println(fib.Fib2(100));
-		System.out.println(fib.Fib2(80)+" "+fib.Fib3(80)+" "+fib.Fib4(80));
+		System.out.println(fib.Fib5(50) + " " + fib.Fib3(50) + " " + fib.Fib4(50));
 
 	}
+
 	/**
 	 * 斐波那契数列纯递归
+	 * 
 	 * @param n
 	 * @return
 	 */
 	public int Fib1(int n) {
-		if(n==1 || n==0) {
+		if (n == 1 || n == 0) {
 			return 1;
 		}
-		
-		return Fib1(n-1)+Fib1(n-2);
+
+		return Fib1(n - 1) + Fib1(n - 2);
 	}
-	
+
 	/**
-	 * 使用一个数组来保存已经计算出的内容
-	 * for循环实现斐波那契数，无递归，效率明显高于Fib1
+	 * 使用一个数组来保存已经计算出的内容 for循环实现斐波那契数，无递归，效率明显高于Fib1
+	 * 
 	 * @param n
 	 * @return
 	 */
 	public int Fib2(int n) {
-		if(n==0||n==1) {
+		if (n == 0 || n == 1) {
 			return 1;
 		}
-		f[0] = 1;f[1] = 1;
-		for(int i=2;i<n;i++) {
-			f[i] = f[i-1]+f[i-2];
+		f[0] = 1;
+		f[1] = 1;
+		for (int i = 2; i < n; i++) {
+			f[i] = f[i - 1] + f[i - 2];
 		}
-		return f[n-1]+f[n-2];
+		return f[n - 1] + f[n - 2];
 	}
 
 	/**
-	 * 递归，并且减少避免递归调用中的重复计算
-	 * 时间复杂度O(n)，空间复杂度O(n)
+	 * 递归，并且减少避免递归调用中的重复计算 时间复杂度O(n)，空间复杂度O(n)
+	 * 
 	 * @param n
 	 * @return
 	 */
 	public int Fib3(int n) {
-		if(n==1||n==2) {
+		if (n == 1 || n == 2) {
 			return 1;
 		}
-		if(f[n]!=0) {
+		if (f[n] != 0) {
 			return f[n];
 		}
-		return f[n]=Fib3(n-1)+Fib3(n-2);
+		return f[n] = Fib3(n - 1) + Fib3(n - 2);
 	}
-	
+
+	/**
+	 * 空間複雜度O(1)，時間複雜度O(n)算法
+	 * @param n
+	 * @return
+	 */
 	public int Fib4(int n) {
-		int sum=0,a=0,b=1,i;
-		for(i=0;i<n;i++) {
-			sum = a+b;
+		int sum = 0, a = 0, b = 1, i;
+		for (i = 0; i < n; i++) {
+			sum = a + b;
 			a = b;
 			b = sum;
 		}
 		return sum;
 	}
+	/**
+	 * 計算大數Fibonacci
+	 */
+	private BigInteger[] fb = new BigInteger[n];
+	public BigInteger Fib5(int n) {
+		if (n==(1) || n==(0)) {
+			return new BigInteger("1");
+		}
+//		System.out.print(fb[n].);
+		if (fb[n]!=null) {
+			return fb[n];
+		}
+		return fb[n] = Fib5(n - 1).add(Fib5(n - 2));
+	}
+
 	public void testFib1(int v) {
 		long start = System.currentTimeMillis();
-		for(int i=0;i<5000;i++) {
+		for (int i = 0; i < 5000; i++) {
 			Fib1(v);
-			
+
 		}
-		System.out.println(System.currentTimeMillis()-start);
+		System.out.println(System.currentTimeMillis() - start);
 	}
-	
+
 	public void testFib2(int v) {
 		long start = System.currentTimeMillis();
-		for(int i=0;i<5000;i++) {
+		for (int i = 0; i < 5000; i++) {
 			Fib2(v);
-			
+
 		}
-		System.out.println(System.currentTimeMillis()-start);
+		System.out.println(System.currentTimeMillis() - start);
 	}
-	
+
 	public void testFib3(int v) {
 		long start = System.currentTimeMillis();
-		for(int i=0;i<5000;i++) {
+		for (int i = 0; i < 5000; i++) {
 			Fib3(v);
-			
+
 		}
-		System.out.println(System.currentTimeMillis()-start);
+		System.out.println(System.currentTimeMillis() - start);
 	}
-	
+
 	public void testFib4(int v) {
 		long start = System.currentTimeMillis();
-		for(int i=0;i<5000;i++) {
+		for (int i = 0; i < 5000; i++) {
 			Fib4(v);
-			
+
 		}
-		System.out.println(System.currentTimeMillis()-start);
+		System.out.println(System.currentTimeMillis() - start);
 	}
 }

@@ -55,8 +55,6 @@ public class PlaneLow extends Plane {
 		y = y + speedy;
 		if (y-r-10 > gamePanel.getHeight()) {
 			if(this!=null) {
-				ArrayList<FlyingObject> sa = planeAI.get_flyObjs();
-				System.out.println("planeAI.get_flyObjs()"+sa+" "+planeAI.get_flyObjs().size());
 				if(planeAI.get_flyObjs()!=null) {
 					planeAI.get_flyObjs().remove(this);
 

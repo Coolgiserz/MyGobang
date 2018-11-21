@@ -15,6 +15,8 @@ public class PlaneAI extends Thread {
 	private int bgx, bgy, bgspeed;
 	private boolean isStart = true, isPause = false;
 	private static  ArrayList<FlyingObject> _flyObjs;
+	private static  ArrayList<Bullet> _bullets;
+
 	private ImageIcon planeLow, planeMid, planeHigh;
 	private int genX, genY;
 	private ImageIcon bgImg;
@@ -38,11 +40,10 @@ public class PlaneAI extends Thread {
 	 */
 	public void run() {
 		BufferedImage bfImg = new BufferedImage(gamePanel.getWidth(), gamePanel.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics bfg = bfImg.getGraphics();
-//		BackThread backThread = new BackThread(gamePanel, new ImageIcon("gamebg1.jpg"),bfg);
-//		backThread.start();// 背景綫程
-		Random rand = new Random();
-		Graphics g = gamePanel.getGraphics();
+		Graphics bfg = bfImg.getGraphics();	//畫布畫筆
+		Random rand = new Random();			//隨機數對象，用於控制敵機生成概率
+		Graphics g = gamePanel.getGraphics();//游戲面板畫筆
+		//飛機圖片資源
 		planeMid = new ImageIcon("midpimg.png");
 		planeHigh = new ImageIcon("highpimg.png");
 		genY = 0;
@@ -54,27 +55,27 @@ public class PlaneAI extends Thread {
 
 				bfg.drawImage(bgImg.getImage(), 0, bgys - deltay, null);
 				bgys++;
-//				try {
-//					Thread.sleep(100);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//				if (gamePanel.getHeight() + bgys > bgImg.getIconHeight()) {
-//					bgys = 0;
 
-				// 自動產生敵機
+				// 自動產生敵機和子彈
 				genX = rand.nextInt(gamePanel.getWidth());
-				if (Math.random() > 0.99) {
+				if (Math.random() > 0.98) {
 //					System.out.println("大飛機生成！");
 				} else if (Math.random() > 0.90) {
 //					System.out.println("小飛機生成！");
 					int speedy = rand.nextInt(10)+5;
 					ImageIcon planeLow = new ImageIcon("lowpimg.png");
+					
 
 					System.out.println("小飛機生成！" + planeLow);
 
 					PlaneLow low = new PlaneLow(genX, genY, 30, 0, speedy, 1, planeLow, gamePanel, this);
 					_flyObjs.add(low);
+					Bullet bul1 = new Bullet(genX, genY, 10, 5, 2*speedy, new ImageIcon("downbullet.png"), gamePanel,this);
+					Bullet bul2 = new Bullet(genX, genY, 10, 0, 2*speedy, new ImageIcon("downbullet.png"), gamePanel,this);
+					Bullet bul3 = new Bullet(genX, genY, 10, -5, 2*speedy, new ImageIcon("downbullet.png"), gamePanel,this);
+					_flyObjs.add(bul1);
+					_flyObjs.add(bul2);
+					_flyObjs.add(bul3);
 				} else {
 //					System.out.println("中飛機生成！！");
 
@@ -97,10 +98,15 @@ public class PlaneAI extends Thread {
 							flylow.movePlane(bfg);
 						}
 
-					} else {
-
+					} else if(_flyObjs.get(i).TYPE == FlyingObject.BULLET){
+						Bullet flyobg = (Bullet) _flyObjs.get(i);
+							System.out.println("小飛機" + planeLow + "," + flyobg.obgimg);
+							flyobg.drawBullet(bfg);
+							flyobg.moveBullet(bfg);
+						
 					}
 				}
+			
 				bfg.setColor(Color.white);
 				g.drawImage(bfImg, 0, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
 //				bfg.fillRect(0, 0,gamePanel.getWidth(), gamePanel.getHeight());
@@ -131,6 +137,14 @@ public class PlaneAI extends Thread {
 
 	public void set_flyObjs(ArrayList<FlyingObject> _flyObjs) {
 		this._flyObjs = _flyObjs;
+	}
+
+	public static ArrayList<Bullet> get_bullets() {
+		return _bullets;
+	}
+
+	public static void set_bullets(ArrayList<Bullet> _bullets) {
+		PlaneAI._bullets = _bullets;
 	}
 
 }

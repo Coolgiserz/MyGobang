@@ -21,8 +21,17 @@ public class FeatureEvent extends MouseAdapter implements ActionListener {
 		srcitem = (JMenuItem) e.getSource();
 		String type = srcitem.getText();
 		switch (type) {
-		case MapMenu.SUBMENU_NEWFEATURE:
+		case MapMenu.SUBMENU_NEWPOINT:
+			//create point feature
 			NewFeatureDialog();
+			break;
+		case MapMenu.SUBMENU_NEWLINE:
+			//create line feature
+
+			NewFeatureDialog();
+			break;
+		case MapMenu.SUBMENU_NEWPOLYGON:
+			//create polygon feature
 			break;
 		case MapMenu.SUBMENU_EDITFEATURE:
 			EditFeature();

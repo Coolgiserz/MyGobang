@@ -14,29 +14,33 @@ public class MapMenu extends JMenuBar {
 	 * 主菜单项
 	 */
 	public static String Menu_file = "文件";
-	protected JMenu menu_1;
+	protected JMenu menuFile;
 	public static String Menu_tool = "工具";
-	protected JMenu menu_2;
+	protected JMenu menuTool;
 	public static String Menu_feature = "要素";
-	protected JMenu menu_3;
+	protected JMenu menuFeature;
 	/*
 	 * 
 	 * 子菜单项
 	 */
 	public final static String SUBMENU_OPEN = "打开";
-	protected JMenuItem filemenu_1;
-
 	public final static String SUBMENU_BASIC = "基础工具";
-	protected JMenuItem basic_1;
-
 	public final static String SUBMENU_NEWFEATURE = "新要素";
-	protected JMenuItem feature_new;
 	public final static String SUBMENU_EDITFEATURE = "编辑属性";
-	protected JMenuItem feature_edit;
-
 	public final static String SUBMENU_CHECKFEATURE = "查看属性";
-	protected JMenuItem feature_check;
+	public final static String SUBMENU_NEWPOINT = "新建点要素";
+	public final static String SUBMENU_NEWLINE = "新建线要素";
+	public final static String SUBMENU_NEWPOLYGON = "新建面要素";
 
+	protected JMenuItem filemenu_1;		//打开
+	protected JMenuItem basic_1;		//基础工具
+	protected JMenuItem feature_new;	//新要素
+	protected JMenuItem featureNewPoint;	//新建点要素
+	protected JMenuItem featureNewLine;	//新建线要素
+	protected JMenuItem featureNewPolygon;	//新建面
+
+	protected JMenuItem feature_edit;	//编辑属性
+	protected JMenuItem feature_check;	//查看属性
 	/*
 	 * 兄弟控件
 	 */
@@ -55,29 +59,34 @@ public class MapMenu extends JMenuBar {
 
 	}
 	public void initMenu() {
-		/*
-		 * 创建菜单对象
-		 */
-		menu_1 = new JMenu(Menu_file);
+		
+		//创建菜单对象
+		menuFile = new JMenu(Menu_file);
 		filemenu_1 = new JMenuItem(SUBMENU_OPEN);
-		menu_2 = new JMenu(Menu_tool);
+		menuTool = new JMenu(Menu_tool);
 		basic_1 = new JMenuItem(SUBMENU_BASIC);
-		menu_3 = new JMenu(Menu_feature);
-		feature_new = new JMenuItem(SUBMENU_NEWFEATURE);
+		menuFeature = new JMenu(Menu_feature);
+		feature_new = new JMenu(SUBMENU_NEWFEATURE);
 		feature_edit = new JMenuItem(SUBMENU_EDITFEATURE);
 		feature_check = new JMenuItem(SUBMENU_CHECKFEATURE);
+		featureNewPoint = new JMenuItem(SUBMENU_NEWPOINT);
+		featureNewLine = new JMenuItem(SUBMENU_NEWLINE);
+		featureNewPolygon = new JMenuItem(SUBMENU_NEWPOLYGON);
 		/*
 		 * 配置菜单控件
 		 */
-		menu_1.add(filemenu_1);
-		menu_2.add(basic_1);
-		menu_3.add(feature_new);
-		menu_3.add(feature_edit);
-		menu_3.add(feature_check);
+		menuFile.add(filemenu_1);
+		menuTool.add(basic_1);
+		menuFeature.add(feature_new);
+		menuFeature.add(feature_edit);
+		menuFeature.add(feature_check);
+		feature_new.add(featureNewPoint);
+		feature_new.add(featureNewLine);
+		feature_new.add(featureNewPolygon);
 
-		this.add(menu_1);
-		this.add(menu_2);
-		this.add(menu_3);
+		this.add(menuFile);
+		this.add(menuTool);
+		this.add(menuFeature);
 	}
 
 	public void setListener() {
@@ -91,7 +100,9 @@ public class MapMenu extends JMenuBar {
 		 * 要素类菜单项事件
 		 */
 		FeatureEvent fv = new FeatureEvent();
-		feature_new.addActionListener(fv);
+		featureNewPoint.addActionListener(fv);
+		featureNewLine.addActionListener(fv);
+		featureNewPolygon.addActionListener(fv);
 		feature_edit.addActionListener(fv);
 		feature_check.addActionListener(fv);
 

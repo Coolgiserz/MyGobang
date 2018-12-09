@@ -15,12 +15,14 @@ import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.coolcats.fractal.Fractal;
 import com.coolcats.shape.Shape;
@@ -34,6 +36,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	JRadioButton _shapeBtn;
 	ButtonGroup _group;
 	JButton _saveImageBtn;
+	JButton _openImageBtn;
 	JButton[] _someBtns = new JButton[10];
 	// 用于控制参数的滑块
 	JSlider a_slider;
@@ -51,6 +54,8 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private final static String COLORBTN = "颜色";
 	private final static String SHAPEBTN = "图形";
 	private final static String IMAGEBTN = "保存为图片";
+	private final static String OPENIMAGEBTN = "打开图片";
+
 	private final static String CLEARCANVAS = "清空画板";
 	private final static String MATHCORROSION = "腐蚀运算";
 	private final static String MATHEXPANSION = "膨胀运算";
@@ -77,16 +82,20 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		this.setBackground(Color.GRAY);
 
 //		_colors = new JColorChooser();
+		//为各个按钮对象分配内存
 		_fraBtn = new JRadioButton(FRACBTN);
 		_colorBtn = new JRadioButton(COLORBTN);
 		_shapeBtn = new JRadioButton(SHAPEBTN);
 		_saveImageBtn = new JButton(IMAGEBTN);
-
+		_openImageBtn = new JButton(OPENIMAGEBTN);
+		
 		_color = new Color(0, 0, 0);
 		_fraBtn.addActionListener(this);
 		_colorBtn.addActionListener(this);
 		_shapeBtn.addActionListener(this);
 		_saveImageBtn.addActionListener(this);
+		_openImageBtn.addActionListener(this);
+
 		_group = new ButtonGroup();
 		_group.add(_shapeBtn);
 		_group.add(_fraBtn);
@@ -130,6 +139,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		_someBtns[3].setText(MATHOPENING);
 		_someBtns[4].setText(MATHCLOSE);
 		this.add(_saveImageBtn);// 为控制面板添加保存为图片按钮
+		this.add(_openImageBtn);
 		for (int i = 0; i < 5; i++) {
 			this.add(_someBtns[i]);
 
@@ -145,7 +155,6 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		String command = e.getActionCommand();
 		switch (command) {
 		case FRACBTN:
-			System.out.print(FRACBTN);
 			_canvas.setBackground(Color.BLACK);
 //			_canvas.repaint();
 			this._frac = (String) JOptionPane.showInputDialog(null, "图形选择", "AI模式设置", JOptionPane.INFORMATION_MESSAGE,
@@ -153,14 +162,12 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 
 			break;
 		case SHAPEBTN:
-			System.out.print(SHAPEBTN);
 			_canvas.setBackground(_canvas.DEFAULT_BACKGROUND);
 
 			this._shape = (String) JOptionPane.showInputDialog(null, "图形选择", "AI模式设置", JOptionPane.INFORMATION_MESSAGE,
 					null, _possibleShape, _possibleShape[0]);
 			break;
 		case COLORBTN:
-			System.out.print(COLORBTN);
 			this._color = JColorChooser.showDialog(this, "颜色选择", Color.BLACK);
 			if (this._color == null) {
 				this._color = Color.BLACK;
@@ -171,11 +178,27 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 
 			break;
 		case IMAGEBTN:
-			System.out.print(IMAGEBTN);
 			try {
 				SaveToImage(_canvas);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
+		case OPENIMAGEBTN:
+			System.out.print("打开");
+
+			try {
+				JFileChooser chooser = new JFileChooser("F:\\Learning\\Java\\IO流");
+				chooser.setFileFilter(new FileNameExtensionFilter("图片","jpg"));
+				chooser.showOpenDialog(_canvas);
+				File f = chooser.getSelectedFile();
+				if(f!=null) {
+					BufferedImage img = ImageIO.read(f);
+					_canvas._g.drawImage(img, 0, 0, null);
+
+				}
+			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			break;
@@ -213,14 +236,18 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		graphics1.drawImage(newImage, 0, 0, null);
 		graphics1.dispose();
 
-		File fa = new File("src/1.jpg");
-		if (!fa.exists()) {
-			fa.createNewFile();
-			System.out.println(123);
-		}
+		JFileChooser chooser = new JFileChooser("F:\\Learning\\Java\\IO流");
+		chooser.showOpenDialog(canvas);
+		File f = chooser.getSelectedFile();
+		if(f!=null) {
+			if (!f.exists()) {
+				f.createNewFile();
+			}
 
-		ImageIO.write(myImage, "jpg", fa);
-		JOptionPane.showMessageDialog(this, "保存为图片成功");
+			ImageIO.write(myImage, "jpg", f);
+			JOptionPane.showMessageDialog(this, "保存为图片成功");
+		}
+		
 	}
 
 	@Override
